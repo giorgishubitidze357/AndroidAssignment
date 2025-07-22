@@ -1,5 +1,9 @@
 package com.example.androidassignment.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.androidassignment.data.local.AppDatabase
+import com.example.androidassignment.data.local.CachedItemDao
 import com.example.androidassignment.data.remote.ItemApiService
 import com.example.androidassignment.data.remote.dto.ItemDto
 import com.example.androidassignment.data.remote.dto.PageDto
@@ -15,6 +19,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -47,4 +52,20 @@ object AppModule {
             .build()
             .create(ItemApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context
+    ): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "app_database.db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCachedItemDao(db: AppDatabase): CachedItemDao = db.cachedItemDao()
 }

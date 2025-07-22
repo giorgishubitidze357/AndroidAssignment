@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -63,6 +62,8 @@ dependencies {
     //Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
 
     //Coil
     implementation(libs.coil.compose)
@@ -73,6 +74,7 @@ dependencies {
     implementation (libs.moshi)
     implementation (libs.moshi.kotlin)
     ksp (libs.moshi.kotlin.codegen)
+    implementation(libs.moshi.adapters)
 
     //Room
     implementation(libs.androidx.room.runtime)
